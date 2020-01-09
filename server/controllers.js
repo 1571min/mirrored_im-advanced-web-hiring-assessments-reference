@@ -51,7 +51,6 @@ module.exports = {
   userContoroller: (req, res) => {
     // TODO : 유저 회원정보 요청 로직 작성
     const sess = req.session;
-    console.log(sess.userid, typeof sess.userid);
     if (sess.userid) {
       user
         .findOne({
