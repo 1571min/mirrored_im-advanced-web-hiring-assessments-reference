@@ -80,7 +80,7 @@ describe('Advanced Web Hiring Assessments - Server', () => {
     });
   });
 
-  describe.skip('GET /user', () => {
+  describe('GET /user', () => {
     beforeEach(done => {
       authenticatedUser
         .post('/signin')
@@ -88,12 +88,9 @@ describe('Advanced Web Hiring Assessments - Server', () => {
           email: 'coding.kim@codestates.com',
           password: 'switzerland'
         })
-        .end((err, res) => {
-          expect(res.status).toBe(200);
+        .then(() => {
           done();
         });
-
-      done();
     });
     test('it should return user data with request of session.userid', done => {
       authenticatedUser.get('/user').end(function(err, res2) {
@@ -103,15 +100,16 @@ describe('Advanced Web Hiring Assessments - Server', () => {
       });
     });
 
-    xtest('it should return Unauthorized if request without session.userid', done => {
-      /*  agent
+    test('it should return Unauthorized if request without session.userid', done => {
+      const authenticateFailedUser = request.agent(app);
+      authenticateFailedUser
         .post('/signin')
         .send({
           email: 'coding.kim@codestates.com',
           password: 'korea'
         })
         .then(function(res) {
-          agent
+          authenticateFailedUser
             .get('/user')
             .then(function(res2) {
               expect(res2.status).toBe(401);
@@ -120,7 +118,7 @@ describe('Advanced Web Hiring Assessments - Server', () => {
             .catch(err => {
               done(err);
             });
-        }); */
+        });
     });
   });
 });
